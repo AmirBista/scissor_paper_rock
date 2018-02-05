@@ -18,11 +18,45 @@ function NodeClient(url) {
         var me = this;
         var url = new URL(window.location.href),
             user = url.searchParams.get("user");
+        if('msgArr' in data){
+            // if(data.msgArr.length = 0){
+            //     $('#messages').html('');
+            // }
+            if(data.loadMsg && data.msgArr.length > 0){
+                $('#messages').html('');
+                for( var i in data.msgArr){
+                    var adminClass = "msg_not_yours";
+                    if(user == data.msgArr[i].user){
+                        adminClass = "msg_yours";
+                        $('#messages').append($('<li align="left" class = "'+adminClass+'">').text(data.msgArr[i].msg));
+                    }
+                    else{
+                        $('#messages').append($('<li align="right" class = "'+adminClass+'">').text(data.msgArr[i].msg));
+                        
+                    }
+                }
+                window.scrollTo(0, document.body.scrollHeight);
+                $('#m').val('');
+            }
+        }
+        if('gameRound' in data){
+            $('.'+data.gameRound).prop("checked", true);
+        }
+        if('currentRound' in data){
+            var count = "<span>Round["+data.currentRound+"]<span>";
+            if(data.currentRound>data.gameRound){
+                count = "";
+            }
+            $('.roundCount').html(count);
+        }
+        $('.'+user+'_child_div').show();
         if (data.setUserName){
             if('userArr' in data){
                 var userArr = data.userArr;
                 if (Object.keys(userArr).length > 1 && !data.endGame) {
-                    timer(data.endTimer, "Ends In", me);
+                    $('#startInfoCnt').hide();
+                    $('#bodyCnt').show();
+                    // timer(data.endTimer, "Ends In", me);
                 }
                 if (Object.keys(userArr).length > 0) {
                     for (var k in userArr){
@@ -37,7 +71,7 @@ function NodeClient(url) {
             if(data.winnerCountArr){
                 for (var key in data.winnerCountArr){
                     if (data.winnerCountArr.hasOwnProperty(key)) {
-                        var html = "<span>"+data.winnerCountArr[key]+"</span>";
+                        var html = "<span style='font-size:20px;font-family: Arial Black;'>"+data.winnerCountArr[key]+"</span>";
                         $('.'+key+'-count-div').html(html);
                     }
                 }
@@ -45,10 +79,26 @@ function NodeClient(url) {
         }
         if('endGame' in data){
             if(data.endGame){
-                var html = "<span><img src='/mi_node_project/Project-A/_include/img/GameOver.png' class='img-fluid'/></span>";
+                var winnerName ='';
+                if (Object.keys(data.winnerCountArr).length > 0) {
+                    var countArr = data.winnerCountArr;
+                    if(countArr["user1"]>countArr["user2"]){
+                        winnerName = "<span style='font-size:20px;color:#00ff00;font-family: Arial Black;'>"+$(".user1-name").val()+" WINS</span>";
+                    }
+                    else if(countArr["user1"]<countArr["user2"]){
+                        winnerName = "<span style='font-size:20px;color:#00ff00;font-family: Arial Black;'>"+$(".user2-name").val()+" WINS</span>";
+                    }
+                    else{
+                        winnerName = "<span style='font-size:20px;color:#f79f24;font-family: Arial Black;'>Tie!!!!!</span>";
+                    }
+
+                }
+                var html = winnerName+"<br/><span><img src='/home_project/scissor_paper_rock/_include/img/GameOver.png' class='img-fluid'/></span>";
                 $('#winner-div').html(html);
                 $('#user1-selected-div').html('');
                 $('#user2-selected-div').html('');
+                $('#startInfoCnt').hide();
+                $('#bodyCnt').show();
                 return;
             }
         }
@@ -58,19 +108,21 @@ function NodeClient(url) {
                    
                     for (var k in data.winnerArr){
                         if (data.winnerArr.hasOwnProperty(k)) {
-                            var html = "<span> WINNER: "+k+"</span><span> He Choose: "+data.winnerArr[k]+"</span>";
+                            var name = $('.'+k+'-name').val();
+                            var html = "<span style='font-size:20px; color:#00ff00;font-family: Arial Black;'> WINNER: "+name+"</span><br/><span style='font-size:20px'><img src='/home_project/scissor_paper_rock/_include/img/"+data.winnerArr[k]+".png' class='img-fluid'/></span>";
                             $('#winner-div').html(html);
                         }
                     }
                 }
                 else{
-                    var html = "<span> Tie!!!</span><span> You Choose:<img src='/mi_node_project/Project-A/_include/img/Tie.png' class='img-fluid'/></span>";
+                    var html = "<span style='font-size:20px; color:#f79f24;font-family: Arial Black;'> Tie!!!</span><br/><span style='font-size:20px'><img src='/home_project/scissor_paper_rock/_include/img/Tie.png' class='img-fluid'/></span>";
                     $('#winner-div').html(html);
                 }
                 if (Object.keys(data.mainArr).length > 0) {
                     for (var k in data.mainArr){
                         if (data.mainArr.hasOwnProperty(k)) {
-                            var html = "<span> "+k+"</span><span> You Choose: <img src='/mi_node_project/Project-A/_include/img/"+data.mainArr[k]+".png' class='img-fluid'/></span>";
+                            var name = $('.'+k+'-name').val();
+                            var html = "<span style='font-size:20px;  color:#00ff00;font-family: Arial Black;'>"+name+" Choose: <img src='/home_project/scissor_paper_rock/_include/img/"+data.mainArr[k]+".png' class='img-fluid'/></span>";
                             // "+data.mainArr[k]+"</span>";
                             $('#'+k+'-selected-div').html(html);
                         }
@@ -81,9 +133,10 @@ function NodeClient(url) {
                 if (Object.keys(data.mainArr).length > 0) {
                     for (var k in data.mainArr){
                         if (data.mainArr.hasOwnProperty(k)) {
-                            var html = "<span><img src='/mi_node_project/Project-A/_include/img/PleaseWait.png' class='img-fluid'/></span>";
+                            var html = "<span><img src='/home_project/scissor_paper_rock/_include/img/spinner.gif' class='img-fluid'/></span>";
                             if(k==user){
-                                html = "<span> "+k+"</span><span> You Choose:<img src='/mi_node_project/Project-A/_include/img/"+data.mainArr[k]+".png' class='img-fluid'/></span>";
+                                var name = $('.'+k+'-name').val();
+                                html = "<span style='font-size:20px; color:#00ff00;font-family: Arial Black;'>"+name+" Choose:<img src='/home_project/scissor_paper_rock/_include/img/"+data.mainArr[k]+".png' class='img-fluid'/></span>";
 
                             }
                             $('#'+k+'-selected-div').html(html);
@@ -91,7 +144,7 @@ function NodeClient(url) {
                     }
                 }
                 else{
-                    var html = "<span><img src='/mi_node_project/Project-A/_include/img/PleaseWait.png' class='img-fluid'/></span>";
+                    var html = "<span><img src='/home_project/scissor_paper_rock/_include/img/spinner.gif' class='img-fluid'/></span>";
                     $('#user1-selected-div').html(html);
                     $('#user2-selected-div').html(html);
                     $('#winner-div').html(html);
@@ -100,8 +153,13 @@ function NodeClient(url) {
         }
         
     });
+    // nodeClient.on('chatMessage', function(msg) {
+    //     $('#messages').append($('<li>').text(msg));
+    //     window.scrollTo(0, document.body.scrollHeight);
+    //     $('#m').val('');
+    // });
     nodeClient.on('userError', function(msg) {
-        var imgHtml = "<span>"+msg+"</span>";
+        var imgHtml = "<span style='font-size:20px'>"+msg+"</span>";
         $('#winner-div').html(imgHtml);
         console.log('error >>', msg);
     });
@@ -111,6 +169,6 @@ function timer(timer, msg, me){
     $('.countdown_msg').html(msg);
     var timer = new Date().getTime() + parseInt(timer + '000');
     $('.countdown').countdown(timer, function(event){
-        $(this).html(event.strftime('<span>%H:%M:%S</span>'));
+        $(this).html(event.strftime("<span style='font-size:20px'>%H:%M:%S</span>"));
     });
 }

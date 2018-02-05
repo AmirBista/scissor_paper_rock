@@ -1,6 +1,6 @@
 var http = require("http");
-var domain ='192.168.1.7';
-// var domain ='192.168.1.122';
+// var domain ='192.168.1.2';
+var domain ='192.168.1.122';
 
 const server = http.createServer(function (request, response) {
 
@@ -13,9 +13,9 @@ const server = http.createServer(function (request, response) {
     // response.render(index);
 
    // response.end('Hello World\n');
-}).listen(8088,domain);
+}).listen(8099,domain);
 io = require('socket.io')(server);
 require('./node-server/node-server')(io); //inculde ios module
 
 // Console will print the message
-console.log('Server running at http://'+domain+':8088/');
+console.log('Server running at http://'+domain+':8099/');

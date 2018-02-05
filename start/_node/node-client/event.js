@@ -1,4 +1,36 @@
 function Event(client) {
+    $('.btnSend').click(function(event){
+    	var msg = $('#m').val();
+    	if(msg){
+			client.nodeClient.emit('appendChat',msg, client.user);
+		}
+    });
+    $('#m').unbind().keypress(function(event) {
+	    if ( event.key == "Enter"){
+	    	var msg = this.value;
+	    	if(msg){
+			  	client.nodeClient.emit('appendChat',msg, client.user);
+	    	}
+		}
+    });
+    $('#btnRestart').click(function(event) {
+	    client.nodeClient.emit('restartGame');
+	    location.reload(true);
+    });
+    $('#btnClearMsg').click(function(event) {
+	    client.nodeClient.emit('clearMsg');
+	    location.reload(true);
+    });
+    $('input:radio[name="round"]').click(function(event) {
+    	var round = this.value;
+	    client.nodeClient.emit('setRoundValue',round);
+    });
+    $('.username').unbind().keypress(function(event) {
+		var name = this.value;
+	    if ( event.key == "Enter"){
+		    client.nodeClient.emit('addUserToUserArr',name, client.user);
+		}
+    });
     $('.user1-name').unbind().keypress(function(event) {
 		var name = this.value;
 		if(client.user == 'user1'){
