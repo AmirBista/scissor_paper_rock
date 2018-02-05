@@ -36,6 +36,7 @@ function NodeClient(url) {
                     }
                 }
                 window.scrollTo(0, document.body.scrollHeight);
+                $('.pre-scrollable-div').scrollTop($('.pre-scrollable-div')[0].scrollHeight);
                 $('#m').val('');
             }
         }
@@ -93,7 +94,7 @@ function NodeClient(url) {
                     }
 
                 }
-                var html = winnerName+"<br/><span><img src='/home_project/scissor_paper_rock/_include/img/GameOver.png' class='img-fluid'/></span>";
+                var html = winnerName+"<br/><span><img src='/app/scissor_paper_rock/_include/img/GameOver.png' class='img-fluid'/></span>";
                 $('#winner-div').html(html);
                 $('#user1-selected-div').html('');
                 $('#user2-selected-div').html('');
@@ -109,20 +110,20 @@ function NodeClient(url) {
                     for (var k in data.winnerArr){
                         if (data.winnerArr.hasOwnProperty(k)) {
                             var name = $('.'+k+'-name').val();
-                            var html = "<span style='font-size:20px; color:#00ff00;font-family: Arial Black;'> WINNER: "+name+"</span><br/><span style='font-size:20px'><img src='/home_project/scissor_paper_rock/_include/img/"+data.winnerArr[k]+".png' class='img-fluid'/></span>";
+                            var html = "<span style='font-size:20px; color:#00ff00;font-family: Arial Black;'> WINNER: "+name+"</span><br/><span style='font-size:20px'><img src='/app/scissor_paper_rock/_include/img/"+data.winnerArr[k]+".png' class='img-fluid'/></span>";
                             $('#winner-div').html(html);
                         }
                     }
                 }
                 else{
-                    var html = "<span style='font-size:20px; color:#f79f24;font-family: Arial Black;'> Tie!!!</span><br/><span style='font-size:20px'><img src='/home_project/scissor_paper_rock/_include/img/Tie.png' class='img-fluid'/></span>";
+                    var html = "<span style='font-size:20px; color:#f79f24;font-family: Arial Black;'> Tie!!!</span><br/><span style='font-size:20px'><img src='/app/scissor_paper_rock/_include/img/Tie.png' class='img-fluid'/></span>";
                     $('#winner-div').html(html);
                 }
                 if (Object.keys(data.mainArr).length > 0) {
                     for (var k in data.mainArr){
                         if (data.mainArr.hasOwnProperty(k)) {
                             var name = $('.'+k+'-name').val();
-                            var html = "<span style='font-size:20px;  color:#00ff00;font-family: Arial Black;'>"+name+" Choose: <img src='/home_project/scissor_paper_rock/_include/img/"+data.mainArr[k]+".png' class='img-fluid'/></span>";
+                            var html = "<span style='font-size:20px;  color:#00ff00;font-family: Arial Black;'>"+name+" Choose: <img src='/app/scissor_paper_rock/_include/img/"+data.mainArr[k]+".png' class='img-fluid'/></span>";
                             // "+data.mainArr[k]+"</span>";
                             $('#'+k+'-selected-div').html(html);
                         }
@@ -133,10 +134,10 @@ function NodeClient(url) {
                 if (Object.keys(data.mainArr).length > 0) {
                     for (var k in data.mainArr){
                         if (data.mainArr.hasOwnProperty(k)) {
-                            var html = "<span><img src='/home_project/scissor_paper_rock/_include/img/spinner.gif' class='img-fluid'/></span>";
+                            var html = "<span><img src='/app/scissor_paper_rock/_include/img/spinner.gif' class='img-fluid'/></span>";
                             if(k==user){
                                 var name = $('.'+k+'-name').val();
-                                html = "<span style='font-size:20px; color:#00ff00;font-family: Arial Black;'>"+name+" Choose:<img src='/home_project/scissor_paper_rock/_include/img/"+data.mainArr[k]+".png' class='img-fluid'/></span>";
+                                html = "<span style='font-size:20px; color:#00ff00;font-family: Arial Black;'>"+name+" Choose:<img src='/app/scissor_paper_rock/_include/img/"+data.mainArr[k]+".png' class='img-fluid'/></span>";
 
                             }
                             $('#'+k+'-selected-div').html(html);
@@ -144,7 +145,7 @@ function NodeClient(url) {
                     }
                 }
                 else{
-                    var html = "<span><img src='/home_project/scissor_paper_rock/_include/img/spinner.gif' class='img-fluid'/></span>";
+                    var html = "<span><img src='/app/scissor_paper_rock/_include/img/spinner.gif' class='img-fluid'/></span>";
                     $('#user1-selected-div').html(html);
                     $('#user2-selected-div').html(html);
                     $('#winner-div').html(html);

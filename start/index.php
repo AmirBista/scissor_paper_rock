@@ -1,10 +1,12 @@
 <?php
 $localhost = 'http://'.$_SERVER['HTTP_HOST'];
-$backgroundImg = $localhost.'/home_project/scissor_paper_rock/_include/img/bk4.jpeg';
-$bImg = $localhost.'/home_project/scissor_paper_rock/_include/img/spinner.gif';
-$paperImg = $localhost.'/home_project/scissor_paper_rock/_include/img/Paper.png';
-$rockImg = $localhost.'/home_project/scissor_paper_rock/_include/img/Rock.png';
-$scissorsImg = $localhost.'/home_project/scissor_paper_rock/_include/img/Scissors.png';
+// $localhost = 'http://192.168.1.6:8080';
+// var_dump($localhost);die;
+$backgroundImg = $localhost.'/app/scissor_paper_rock/_include/img/bk4.jpeg';
+$bImg = $localhost.'/app/scissor_paper_rock/_include/img/spinner.gif';
+$paperImg = $localhost.'/app/scissor_paper_rock/_include/img/Paper.png';
+$rockImg = $localhost.'/app/scissor_paper_rock/_include/img/Rock.png';
+$scissorsImg = $localhost.'/app/scissor_paper_rock/_include/img/Scissors.png';
 // echo $_SERVER['REMOTE_ADDR'];
 ?>
 <style type="text/css">
@@ -20,12 +22,55 @@ $scissorsImg = $localhost.'/home_project/scissor_paper_rock/_include/img/Scissor
       	margin-top: 5px;
    		margin-bottom: 5px;
     }
-      .msg_not_yours { background: #a0e4b0; float:right;}
-      .msg_yours { background: #00ced1; float:left;}
-      #messages { margin-bottom: 40px }
+	  .msg_not_yours { background: #a0e4b0; float:right;}
+	  .msg_yours { background: #00ced1; float:left;}
+	  #messages { margin-bottom: 40px }
+	 /* #main-div{
+	  	z-index: 999;
+	  	box-shadow: 0 0 20px #6a6a6a;
+		border: 1px solid #2f72ac;
+	    opacity: 1;
+	  }*/
+	 #main-div {
+	    width:100%;
+	    height:100%;
+	    position: absolute;
+	    background-image:url(<?php echo $backgroundImg;?>);
+	    background-size:cover;
+		border: 1px solid #2f72ac;
+	    /*-webkit-filter: blur(4px);
+	    -moz-filter: blur(4px);
+	    -ms-filter: blur(4px);
+	    -o-filter: blur(4px);*/
+	    /*filter: blur(4px);*/
+	}
+	#child-div-1 { 
+		box-shadow: 0 0 30px #6a6a6a;
+		border: 1px solid #2f72ac;
+	    opacity: 1;
+/*	    -webkit-filter: blur(0px);
+	    -moz-filter: blur(0px);
+	    -ms-filter: blur(0px);
+	    -o-filter: blur(0px);
+	    filter: blur(0px); */
+ 	}
+ 	#child-div-2 { 
+	  	box-shadow: 0 0 30px #6a6a6a;
+		border: 1px solid #2f72ac;
+	    opacity: 1;
+/*	    -webkit-filter: blur(0px);
+	    -moz-filter: blur(0px);
+	    -ms-filter: blur(0px);
+	    -o-filter: blur(0px);
+	    filter: blur(0px); */
+ 	}
+ 	.pre-scrollable-div {
+	     max-height: 90%; 
+	    overflow-y: scroll;
+	}
     </style>
-<div class="row" style="height: 100vh;  width: 100vw;background:transparent url(<?php echo $backgroundImg;?>) no-repeat center /cover;" >
-	<div class="col-md-7 container border specialBackground" >
+<div class="row" id="main-div"  >
+	<div id="child-div-1" class="col-md-7 container border specialBackground" >
 		<div class="col-md-6 text-right">
 			<button type="button" class="btn btn-danger .navbar-right" id="btnRestart">Restart</button>
 		</div>
@@ -109,14 +154,16 @@ $scissorsImg = $localhost.'/home_project/scissor_paper_rock/_include/img/Scissor
 			</div>
 		</div>
 	</div>
-	<div class="col-md-5 container border specialBackground" style="height: 100vh; ">
-		<div class="col-md-6 text-right">
+	<div id="child-div-2" class="col-md-5 container border specialBackground" >
+		<div class="col">
 		<button type="button" class="btn btn-warning .navbar-right" id="btnClearMsg" style="display:none;">Clear Message</button>
 		</div>
-		<div class="pre-scrollable" style="height: 100vh; ">
-			<ul id="messages"></ul>
+		<div class="row-md-7 pre-scrollable-div"  >
+			<ul id="messages" style="height: 100vh;"></ul>
 		</div>
-		<input id="m" autocomplete="off" /><button class="btnSend">Send</button>
+		<div class="row-md-2">
+			<input id="m" autocomplete="off" /><button class="btnSend">Send</button>
+		</div>
 	    <!--
 		<form >
 		  <textarea id="m" name="message" rows="10" cols="76"></textarea>
@@ -128,12 +175,12 @@ $scissorsImg = $localhost.'/home_project/scissor_paper_rock/_include/img/Scissor
 	</div>
 </div>
 <!-- ends agreement modal  -->
-<link rel="stylesheet" href="<?php echo $localhost; ?>/home_project/scissor_paper_rock/_include/css/bootstrap.min.css">
-<script src="<?php echo $localhost; ?>/home_project/scissor_paper_rock/_include/js/jquery-3.3.1.min.js" ></script>
-<script src="<?php echo $localhost; ?>/home_project/scissor_paper_rock/_include/js/bootstrap.min.js" ></script>
+<link rel="stylesheet" href="<?php echo $localhost; ?>/app/scissor_paper_rock/_include/css/bootstrap.min.css">
+<script src="<?php echo $localhost; ?>/app/scissor_paper_rock/_include/js/jquery-3.3.1.min.js" ></script>
+<script src="<?php echo $localhost; ?>/app/scissor_paper_rock/_include/js/bootstrap.min.js" ></script>
 <!-- socket.io -->
-<script src="<?php echo $localhost; ?>/home_project/scissor_paper_rock/node_modules/socket.io-client/dist/socket.io.js"></script>
-<script src="<?php echo $localhost; ?>/home_project/scissor_paper_rock/_include/js/jquery.countdown.min.js"></script> 
+<script src="<?php echo $localhost; ?>/app/scissor_paper_rock/node_modules/socket.io-client/dist/socket.io.js"></script>
+<script src="<?php echo $localhost; ?>/app/scissor_paper_rock/_include/js/jquery.countdown.min.js"></script> 
 
 <script type="text/javascript" src="_node/node-client/event.js"></script>
 <script type="text/javascript" src="_node/node-client/node-client.js"></script>
