@@ -36,6 +36,7 @@ function NodeClient(url) {
                     }
                 }
                 window.scrollTo(0, document.body.scrollHeight);
+                $('.pre-scrollable-div').scrollTop($('.pre-scrollable-div')[0].scrollHeight);
                 $('#m').val('');
             }
         }
@@ -57,6 +58,10 @@ function NodeClient(url) {
                     $('#startInfoCnt').hide();
                     $('#bodyCnt').show();
                     // timer(data.endTimer, "Ends In", me);
+                }
+                else{
+                    $('#startInfoCnt').show();
+                    $('#bodyCnt').hide();
                 }
                 if (Object.keys(userArr).length > 0) {
                     for (var k in userArr){

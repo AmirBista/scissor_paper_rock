@@ -1,5 +1,5 @@
 var http = require("http");
-// var domain ='192.168.1.2';
+// var domain ='192.168.1.4';
 var domain ='192.168.1.122';
 
 const server = http.createServer(function (request, response) {

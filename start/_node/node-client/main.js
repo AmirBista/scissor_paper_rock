@@ -1,5 +1,5 @@
 $(function($) {
-	// var baseUrl ='http://192.168.1.2:8099/';
+	// var baseUrl ='http://192.168.1.4:8099/';
 	var baseUrl ='http://192.168.1.122:8099/';
 	var client = {};
 	var client_event = {};
