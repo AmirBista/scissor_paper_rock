@@ -18,6 +18,14 @@ function NodeClient(url) {
         var me = this;
         var url = new URL(window.location.href),
             user = url.searchParams.get("user");
+        if('showMsgCnt' in data){
+            if(data.showMsgCnt){
+                $('#child-div-2').show();
+            }
+            else{
+                $('#child-div-2').hide();
+            }
+        }
         if('msgArr' in data){
             // if(data.msgArr.length = 0){
             //     $('#messages').html('');

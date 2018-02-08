@@ -16,8 +16,10 @@ module.exports = function(io) {
     let endTimer = -1;
     let msgArr = [];
     let loadMsg = false;
+    let showMsgCnt = false;
     var sendCurrentState = function(socket) {
         var current_state = {
+            'showMsgCnt'  : showMsgCnt,
             'gameRound': gameRound,
             'currentRound': currentRound,
             'endGame': endGame,
@@ -190,6 +192,9 @@ module.exports = function(io) {
             arr['msg'] = Msg;
             msgArr.push(arr);
             // socket.emit('chatMessage',Msg);
+        });
+        socket.on('showHideMsg', function(Msg,user) {
+            showMsgCnt = showMsgCnt ? false : true;
         });
 
     });

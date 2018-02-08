@@ -71,6 +71,7 @@ $scissorsImg = $localhost.'/home_project/scissor_paper_rock/_include/img/Scissor
 	<div id="child-div-1" class="col-md-7 container border specialBackground" >
 		<div class="col-md-6 text-right">
 			<button type="button" class="btn btn-danger .navbar-right" id="btnRestart">Restart</button>
+			<button type="button" class="btn btn-info .navbar-right" id="btnShowMsgCnt" >Message</button>
 		</div>
 		<div class="col" id="startInfoCnt" style="display:none;">
 			<input type="text" name="username" class="username" placeholder="Enter Your Name">
@@ -152,7 +153,7 @@ $scissorsImg = $localhost.'/home_project/scissor_paper_rock/_include/img/Scissor
 			</div>
 		</div>
 	</div>
-	<div id="child-div-2" class="col-md-5 container border specialBackground" >
+	<div id="child-div-2" class="col-md-5 container border specialBackground" style="display:none;">
 		<div class="col">
 		<button type="button" class="btn btn-warning .navbar-right" id="btnClearMsg" style="display:none;">Clear Message</button>
 		</div>

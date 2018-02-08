@@ -1,4 +1,7 @@
 function Event(client) {
+    $('#btnShowMsgCnt').click(function(event) {
+	    client.nodeClient.emit('showHideMsg');
+    });
     $('.btnSend').click(function(event){
     	var msg = $('#m').val();
     	if(msg){
